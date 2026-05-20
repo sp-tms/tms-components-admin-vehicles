@@ -1,0 +1,64 @@
+{
+	"name" : "Vehicles",
+	"route" : "vehicles",
+	"description" : "<p>TMS vehicles component</p>",
+	"module_type" : "components",
+	"app_type" : "tms",
+	"category" : "admin",
+	"version" : "0.0.0",
+	"repo" : "https://github.com/sp-tms/tms-components-admin-vehicles",
+	"class" : "Apps\\Tms\\Components\\Vehicles\\VehiclesComponent",
+	"dependencies" : 
+	{
+		"core" : 
+		{
+			"name" : "Core",
+			"version" : "0.0.0-rc.15",
+			"repo" : "https://github.com/sp-framework/core"
+		},
+		"apptype" : 
+		{
+			"name" : "Transport Management System",
+			"version" : "0.0.0",
+			"repo" : "https://github.com/sp-tms/tms"
+		},
+		"packages" : 
+		[
+			{
+				"name" : "Vehicles",
+				"version" : "0.0.0",
+				"repo" : "https://github.com/sp-tms/tms-packages-admin-vehicles"
+			}
+		],
+		"middlewares" : [],
+		"views" : [],
+		"externals" : 
+		{
+			"composer" : 
+			{
+				"require" : []
+			},
+			"config" : 
+			{
+				"allow-plugins" : []
+			},
+			"extra" : 
+			{
+				"patches" : []
+			}
+		}
+	},
+	"menu" : 
+	{
+		"vehicles" : 
+		{
+			"title" : "vehicles",
+			"icon" : "truck-moving",
+			"link" : "vehicles"
+		},
+		"seq" : "0"
+	},
+	"widgets" : [],
+	"filters" : [],
+	"settings" : []
+}
