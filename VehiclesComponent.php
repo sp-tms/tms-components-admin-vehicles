@@ -76,46 +76,63 @@ class VehiclesComponent extends BaseComponent
 
     /**
      * @acl(name=add)
+     * @notification(name=add)
      */
     public function addAction()
     {
         $this->requestIsPost();
 
-        $this->vehiclesPackage->addCompany($this->postData());
+        $this->vehiclesPackage->addVehicle($this->postData());
 
         $this->addResponse(
             $this->vehiclesPackage->packagesData->responseMessage,
             $this->vehiclesPackage->packagesData->responseCode
         );
+
+        if ($this->vehiclesPackage->packagesData->responseCode === 0) {
+            $this->addToNotification('add', 'Added new vehicle ' . $this->vehiclesPackage->packagesData->last['name'], null, $this->vehiclesPackage->packagesData->last);
+        }
     }
 
     /**
      * @acl(name=update)
+     * @notification(name=update)
      */
     public function updateAction()
     {
         $this->requestIsPost();
 
-        $this->vehiclesPackage->updateCompany($this->postData());
+        $this->vehiclesPackage->useMutex(true);
+
+        $this->vehiclesPackage->updateVehicle($this->postData());
 
         $this->addResponse(
             $this->vehiclesPackage->packagesData->responseMessage,
             $this->vehiclesPackage->packagesData->responseCode
         );
+
+        if ($this->vehiclesPackage->packagesData->responseCode === 0) {
+            $this->addToNotification('update', 'Updated vehicle ' . $this->vehiclesPackage->packagesData->last['name'], null, $this->vehiclesPackage->packagesData->last);
+        }
     }
 
     /**
      * @acl(name=remove)
+     * @notification(name=remove)
      */
     public function removeAction()
     {
         $this->requestIsPost();
 
-        $this->vehiclesPackage->removeCompany($this->postData());
+        $this->vehiclesPackage->removeVehicle($this->postData());
 
         $this->addResponse(
             $this->vehiclesPackage->packagesData->responseMessage,
             $this->vehiclesPackage->packagesData->responseCode
         );
+
+        if ($this->vehiclesPackage->packagesData->responseCode === 0) {
+            $this->addToNotification('remove', 'Archived vehicle ' . $this->vehiclesPackage->packagesData->last['name'], null, $this->vehiclesPackage->packagesData->last);
+        }
     }
 }
