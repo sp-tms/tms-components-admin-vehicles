@@ -18,9 +18,17 @@ class VehiclesComponent extends BaseComponent
 
     protected $toolsUomPackage;
 
-    public function initialize()
+    public function initialize($onlyActivityLogs = false)
     {
         $this->vehiclesPackage = $this->usePackage(Vehicles::class);
+
+        $this->setActivityLogsPackage($this->vehiclesPackage, 'vehicles/activitylogs');
+
+        if ($onlyActivityLogs) {
+            return;
+        }
+
+        $this->setNotificationPackage($this->vehiclesPackage, 'registration_no');
 
         $this->companiesPackage = $this->usePackage(Companies::class);
 
@@ -60,6 +68,8 @@ class VehiclesComponent extends BaseComponent
             $this->view->uoms = $this->toolsUomPackage->getAll()->toolsuom;
 
             if ($this->getData()['id'] != 0) {
+                $this->vehiclesPackage->useMutex(true);
+
                 $vehicle = $this->vehiclesPackage->getVehicle((int) $this->getData()['id']);
 
                 if (!$vehicle) {
@@ -124,10 +134,6 @@ class VehiclesComponent extends BaseComponent
             $this->vehiclesPackage->packagesData->responseMessage,
             $this->vehiclesPackage->packagesData->responseCode
         );
-
-        if ($this->vehiclesPackage->packagesData->responseCode === 0) {
-            $this->addToNotification('add', 'Added new vehicle ' . $this->vehiclesPackage->packagesData->last['name'], null, $this->vehiclesPackage->packagesData->last);
-        }
     }
 
     /**
@@ -146,10 +152,6 @@ class VehiclesComponent extends BaseComponent
             $this->vehiclesPackage->packagesData->responseMessage,
             $this->vehiclesPackage->packagesData->responseCode
         );
-
-        if ($this->vehiclesPackage->packagesData->responseCode === 0) {
-            $this->addToNotification('update', 'Updated vehicle ' . $this->vehiclesPackage->packagesData->last['name'], null, $this->vehiclesPackage->packagesData->last);
-        }
     }
 
     /**
@@ -168,7 +170,7 @@ class VehiclesComponent extends BaseComponent
         );
 
         if ($this->vehiclesPackage->packagesData->responseCode === 0) {
-            $this->addToNotification('remove', 'Archived vehicle ' . $this->vehiclesPackage->packagesData->last['name'], null, $this->vehiclesPackage->packagesData->last);
+            $this->addToNotification('remove', 'Archived vehicle ' . $this->vehiclesPackage->packagesData->last['registration_no'], null, $this->vehiclesPackage->packagesData->last);
         }
     }
 
