@@ -31,7 +31,14 @@
 			}
 		],
 		"middlewares" : [],
-		"views" : [],
+		"views" : 
+		[
+			{
+				"name" : "Vehicles",
+				"version" : "0.2.0",
+				"repo" : "https://github.com/sp-tms/tms-views-admin-default-vehicles"
+			}
+		],
 		"externals" : 
 		{
 			"composer" : 
